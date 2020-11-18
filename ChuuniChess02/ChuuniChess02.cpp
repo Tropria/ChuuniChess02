@@ -8,6 +8,11 @@ void mainLoop();
 
 //全局变量
 State* gState = 0;
+const int gFrameInterval = 8; //16毫秒62.5fps。
+unsigned gPreviousTime[10]; //10记录框架时间
+int gCounter = 0; //一个计数器，用于计算主循环的次数
+
+#define USE_SLEEP_FUNCTION //使用sleep函数
 
 namespace GameLib {
 	void Framework::update() {
@@ -18,6 +23,26 @@ namespace GameLib {
 void mainLoop() {
 	//固定帧率处理。
 	Framework f = Framework::instance();
+	while ((f.time() - gPreviousTime[9]) < gFrameInterval) {
+#ifdef USE_SLEEP_FUNCTION
+		f.sleep(1);
+#endif
+	}
+	//帧率计算
+	unsigned currentTime = f.time();
+	unsigned frameInterval10 = currentTime - gPreviousTime[0];
+	if (gCounter % 60 == 0) { //60每帧显示一次帧率
+		cout << "frameInterval:" << frameInterval10 / 10;
+		cout << " FrameRate:" << 10 * 1000 / frameInterval10 << endl;
+	}
+	++gCounter;
+	//更新历史
+	for (int i = 0; i < 9; ++i) {
+		gPreviousTime[i] = gPreviousTime[i + 1];
+	}
+	gPreviousTime[9] = currentTime;
+
+
 	//×按钮被按下了吗？
 	if (Framework::instance().isEndRequested()) {
 		if (gState) {
@@ -35,6 +60,8 @@ void mainLoop() {
 		}
 		gState = new State(file.getData(), file.getSize());
 	}
+//cout << "gState.width "<< gState->mWidth<< " height "<< gState->mHeight << endl;
+//gState->output();
 
 	//获取输入
 	int dx = 0;
@@ -62,8 +89,6 @@ void mainLoop() {
 	gState->update(dx, dy);
 
 	gState->draw();
-	
-
-
 
 }
+

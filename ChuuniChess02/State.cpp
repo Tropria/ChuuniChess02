@@ -1,6 +1,6 @@
 #include "State.h"
 #include "Image.h"
-
+#include "GameLib/Framework.h"
 #define GSIZE GAME_GRID_SIZE
 
 class State::Object {
@@ -13,7 +13,7 @@ public:
 		OBJ_UNKNOW
 	};
 
-	//图片ID
+	//图片ID 对应dds文件
 	enum ImageID {
 		IMG_ID_CHESS,
 		IMG_ID_WALL,
@@ -36,11 +36,9 @@ public:
 
 	//绘画背景
 	void drawBackground(int x, int y, Image* image) const {
-		ImageID id = IMG_ID_SPACE;
-		if (mType == IMG_ID_WALL) {//如果是墙，直接画
+		if (mType == OBJ_WALL) {//如果是墙，直接画
 			drawCell(x, y, IMG_ID_WALL, image);
-		}
-		else {//其他情况，直接画space在背景上
+		}else {//其他情况，直接画space在背景上
 			drawCell(x, y, IMG_ID_SPACE, image);
 		}
 	}
@@ -51,7 +49,7 @@ public:
 		if (mType == OBJ_CHESS) {
 			id = IMG_ID_CHESS;
 		}
-		if (id != IMG_ID_SPACE && id != IMG_ID_WALL) {
+		if (id == IMG_ID_CHESS) {
 			//计算移动
 			int dx = mMoveX * (GSIZE - moveCount);
 			int dy = mMoveY * (GSIZE - moveCount);
@@ -84,7 +82,12 @@ public:
 	int mMoveY;
 };
 
-State::State(const char* stageData, int size) {
+State::State(const char* stageData, int size):
+mImage(0),
+mMoveCount(0),
+mWidth(0),
+mHeight(0)
+{
 	setObjects(stageData, size);
 	mObjects.setSize(mWidth, mHeight);
 	//初始化舞台
@@ -93,8 +96,7 @@ State::State(const char* stageData, int size) {
 	for (int i = 0; i < size; ++i) {
 		Object t;
 		switch (stageData[i]) {
-		case '#': case ' ': case 'o': case 'O':
-		case '.': case 'p': case 'P':
+		case '#': case ' ': case 'c':
 			mObjects(x, y).set(stageData[i]);
 			++x;
 			break;
@@ -113,10 +115,9 @@ void State::setObjects(const char* stageData, int size) {
 	int y = 0;
 	for (int i = 0; i < size; ++i) {
 		switch (stageData[i]) {
-			//case '#': case ' ': case 'o': case 'O':
-			//case '.': case 'p': case 'P':
-			//	++x;
-			//	break;
+		case '#': case ' ': case 'c':
+			++x;
+			break;
 		case '\n':
 			++y;
 			//读到换行符时，最大值更新
@@ -124,11 +125,11 @@ void State::setObjects(const char* stageData, int size) {
 			mHeight = (mHeight > y) ? mHeight : y;
 			x = 0;
 			break;
-		default:
-			//读到非换行符时，++x
-			//注意: 有风险！
-			++x;
-			break;
+		//default:
+		//	//读到非换行符时，++x
+		//	//注意: 有风险！
+		//	++x;
+		//	break;
 		}
 	}
 }
@@ -201,4 +202,15 @@ void State::update(int dx, int dy) {
 		mMoveCount = 1; //开始行动
 	}
 
+}
+
+void State::output() const {
+	using namespace GameLib;
+	cout <<"size0 : "<<mObjects.getSize0() << " size1 :" << mObjects.getSize1() << endl;
+	for (int y = 0; y < mHeight; ++y) {
+		for (int x = 0; x < mWidth; ++x) {
+			cout << mObjects(x, y).mType <<' ';
+		}
+		cout << endl;
+	}
 }

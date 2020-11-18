@@ -20,6 +20,14 @@ public:
 		mSize1 = size1;
 		mArray = new T[mSize0 * mSize1];
 	}
+
+	int getSize0() const {
+		return mSize0;
+	}
+	int getSize1() const {
+		return mSize1;
+	}
+
 	T& operator() (int index0, int index1) {
 		return mArray[index1 * mSize0 + index0];
 	}

@@ -14,14 +14,16 @@ public:
 	void update(int dx, int dy);
 	void draw() const;
 
+	int mWidth;//華芞喜渡
+	int mHeight;
+	void output() const ;
 private:
 	class Object;
 	void setObjects(const char* stageData, int size);
 
 	Array2D<Object> mObjects;
 
-	int mWidth;//華芞喜渡
-	int mHeight;
+	
 	Image* mImage;
 
 	int mMoveCount;

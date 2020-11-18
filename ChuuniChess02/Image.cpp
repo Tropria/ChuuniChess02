@@ -56,8 +56,8 @@ void Image::draw(
 
 	unsigned* vram = Framework::instance().videoMemory();
 	int windowWidth = Framework::instance().width();
-	for (int y = 0; y < mHeight; ++y) {
-		for (int x = 0; x < mWidth; ++x) {
+	for (int y = 0; y < height; ++y) {
+		for (int x = 0; x < width; ++x) {
 			unsigned src = mData[(y + srcY) * mWidth + (x + srcX)];
 			unsigned* dst = &vram[(y + dstY) * windowWidth + (x + dstX)];
 			*dst = blend(src, *dst);

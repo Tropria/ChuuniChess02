@@ -4,10 +4,9 @@
 using namespace std;
 File::File(const char* fileName) : mSize(0), mData(0) {
 	ifstream in(fileName, ifstream::binary);
-
 	if (in) {
 		in.seekg(0, ifstream::end);
-		mSize = static_cast<int> (in.tellg());
+		mSize = static_cast<int>(in.tellg());
 		in.seekg(0, ifstream::beg);
 		mData = new char[mSize];
 		in.read(mData, mSize);
