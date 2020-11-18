@@ -1,7 +1,1 @@
-﻿  ChuuniChess02.cpp
-C:\Users\nyf\source\repos\ChuuniChess02\ChuuniChess02\Array2D.h(10,1): warning C4150: deletion of pointer to incomplete type 'State::Object'; no destructor called
-C:\Users\nyf\source\repos\ChuuniChess02\ChuuniChess02\State.h(21): message : see declaration of 'State::Object'
-C:\Users\nyf\source\repos\ChuuniChess02\ChuuniChess02\Array2D.h(8): message : while compiling class template member function 'Array2D<State::Object>::~Array2D(void)'
-C:\Users\nyf\source\repos\ChuuniChess02\ChuuniChess02\ChuuniChess02.cpp(93): message : see reference to function template instantiation 'Array2D<State::Object>::~Array2D(void)' being compiled
-C:\Users\nyf\source\repos\ChuuniChess02\ChuuniChess02\State.h(24): message : see reference to class template instantiation 'Array2D<State::Object>' being compiled
-  ChuuniChess02.vcxproj -> C:\Users\nyf\source\repos\ChuuniChess02\Debug\ChuuniChess02.exe
+﻿

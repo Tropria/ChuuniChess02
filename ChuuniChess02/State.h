@@ -7,11 +7,15 @@
 #include "Array2D.h"
 
 class Image;
+enum ChessType {
+	MAN,
+	BLOCK,
+};
 
 class State {
 public:
 	State(const char* stageData, int size);
-	void update(int dx, int dy);
+	void update(int dx, int dy, bool isJ);
 	void draw() const;
 
 	int mWidth;//地图尺寸
@@ -23,10 +27,15 @@ private:
 
 	Array2D<Object> mObjects;
 
-	
+	ChessType curColor;//当前行动的一方的颜色 0 white 1 black
+	Object* mCursor;
+	int x_cursor;
+	int y_cursor;
+
 	Image* mImage;
 
 	int mMoveCount;
+
 };
 
 #endif

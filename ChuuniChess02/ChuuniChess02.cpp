@@ -8,7 +8,7 @@ void mainLoop();
 
 //全局变量
 State* gState = 0;
-const int gFrameInterval = 8; //16毫秒62.5fps。
+const int gFrameInterval = 32; //16毫秒62.5fps。
 unsigned gPreviousTime[10]; //10记录框架时间
 int gCounter = 0; //一个计数器，用于计算主循环的次数
 
@@ -78,6 +78,8 @@ void mainLoop() {
 	else if (f.isKeyOn('s')) {
 		dy += 1;
 	}
+
+
 	//结束判断
 	if (f.isKeyOn('q')) {
 		delete gState;
@@ -86,7 +88,7 @@ void mainLoop() {
 		return;
 	}
 
-	gState->update(dx, dy);
+	gState->update(dx, dy, f.isKeyOn('j'));
 
 	gState->draw();
 
