@@ -2,7 +2,7 @@
 #ifndef INCLUDED_STATE_H
 #define INCLUDED_STATE_H
 
-#define GAME_GRID_SIZE (32)
+#define GAME_GRID_SIZE (16)
 
 #include "Array2D.h"
 

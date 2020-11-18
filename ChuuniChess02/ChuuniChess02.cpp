@@ -28,7 +28,7 @@ void mainLoop() {
 	}
 	//初始化第一帧
 	if (!gState) {
-		File file("1.txt");
+		File file("stageData.txt");
 		if (!(file.getData())) { //没有数据！
 			cout << "stage file could not be read." << endl;
 			return;
